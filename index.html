@@ -4,333 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>全球实时汇率看板</title>
-    <!-- 引入 Chart.js 图表库 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        :root {
-            --primary-color: #4f46e5; /* 主题蓝 */
-            --bg-color: #f3f4f6;
-            --card-bg: #ffffff;
-            --text-main: #1f2937;
-            --text-sub: #6b7280;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            height: fit-content;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            color: var(--primary-color);
-            font-size: 24px;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-size: 14px;
-            color: var(--text-sub);
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        input[type="number"], select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: border-color 0.2s;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-        }
-
-        .currency-row {
-            display: flex;
-            gap: 15px;
-            align-items: flex-end;
-        }
-
-        .currency-col {
-            flex: 1;
-        }
-
-        .swap-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 2px; /* Align with inputs */
-            transition: transform 0.2s;
-        }
-
-        .swap-btn:hover {
-            transform: rotate(180deg);
-        }
-
-        .result-box {
-            background: #f9fafb;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            margin-top: 30px;
-            border: 1px dashed #d1d5db;
-        }
-
-        .result-value {
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin: 10px 0;
-        }
-
-        .rate-info {
-            font-size: 14px;
-            color: var(--text-sub);
-        }
-
-        button.convert-btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: opacity 0.2s;
-        }
-
-        button.convert-btn:hover {
-            opacity: 0.9;
-        }
-
-        button:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-        }
-
-        #chartContainer {
-            margin-top: 30px;
-            height: 200px;
-            width: 100%;
-        }
-        
-        .loading-text {
-            color: var(--text-sub);
-            font-style: italic;
-        }
+        :root { --primary: #4f46e5; --bg: #f3f4f6; --card: #fff; --text: #1f2937; --sub: #6b7280; }
+        body { font-family: -apple-system, "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
+        .container { width: 100%; max-width: 600px; background: var(--card); border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); padding: 30px; height: fit-content; }
+        h1 { text-align: center; color: var(--primary); margin: 0 0 30px; font-size: 24px; }
+        label { display: block; font-size: 14px; color: var(--sub); margin-bottom: 8px; font-weight: 600; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 16px; box-sizing: border-box; outline: none; transition: 0.2s; }
+        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+        .row { display: flex; gap: 15px; align-items: flex-end; margin-bottom: 20px; }
+        .col { flex: 1; }
+        .swap-btn { background: var(--primary); color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-bottom: 2px; transition: 0.2s; }
+        .swap-btn:hover { transform: rotate(180deg); }
+        .btn { width: 100%; padding: 14px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .btn:disabled { background: #9ca3af; cursor: not-allowed; }
+        .result-box { background: #f9fafb; border: 1px dashed #d1d5db; border-radius: 8px; padding: 20px; text-align: center; margin-top: 30px; }
+        .res-val { font-size: 32px; font-weight: bold; color: var(--primary); margin: 10px 0; }
+        .res-info { font-size: 14px; color: var(--sub); }
+        #chartBox { margin-top: 30px; height: 200px; width: 100%; }
     </style>
 </head>
 <body>
-
 <div class="container">
-    <header>
-        <h1>💱 全球实时汇率看板</h1>
-    </header>
-
-    <div class="input-group">
-        <label>金额 (Amount)</label>
+    <h1>💱 全球实时汇率看板</h1>
+    
+    <div style="margin-bottom: 20px;">
+        <label>金额</label>
         <input type="number" id="amount" value="1" min="0" step="any">
     </div>
 
-    <div class="currency-row">
-        <div class="currency-col">
-            <label>从 (Base)</label>
-            <select id="fromCurrency"></select>
+    <div class="row">
+        <div class="col">
+            <label>源货币</label>
+            <select id="fromCur"></select>
         </div>
-        
-        <button class="swap-btn" id="swapBtn" title="交换货币">⇄</button>
-
-        <div class="currency-col">
-            <label>到 (Target)</label>
-            <select id="toCurrency"></select>
+        <button class="swap-btn" id="swapBtn" title="交换">⇄</button>
+        <div class="col">
+            <label>目标货币</label>
+            <select id="toCur"></select>
         </div>
     </div>
 
-    <button class="convert-btn" id="convertBtn">开始转换</button>
+    <button class="btn" id="calcBtn">开始转换</button>
 
     <div class="result-box">
-        <div class="rate-info" id="rateInfo">等待输入...</div>
-        <div class="result-value" id="resultValue">---</div>
+        <div class="res-info" id="rateInfo">等待输入...</div>
+        <div class="res-val" id="resVal">---</div>
     </div>
 
-    <div id="chartContainer">
-        <canvas id="historyChart"></canvas>
-    </div>
+    <div id="chartBox"><canvas id="chart"></canvas></div>
 </div>
 
 <script>
-    // --- 配置区域 ---
-    // 使用 ExchangeRate-API (免费公开端点，支持 CORS)
-    const API_URL = 'https://api.exchangerate-api.com/v4/latest/USD'; 
+    // 核心货币中文映射表（已包含常用及主要贸易货币）
+    const CURRENCY_NAMES = {
+        'CNY': '人民币', 'USD': '美元', 'EUR': '欧元', 'GBP': '英镑', 'JPY': '日元', 
+        'HKD': '港币', 'TWD': '新台币', 'KRW': '韩元', 'SGD': '新加坡元', 'AUD': '澳元', 
+        'CAD': '加拿大元', 'CHF': '瑞士法郎', 'THB': '泰铢', 'MYR': '马来西亚林吉特', 
+        'RUB': '俄罗斯卢布', 'INR': '印度卢比', 'VND': '越南盾', 'PHP': '菲律宾比索', 
+        'IDR': '印尼盾', 'NZD': '新西兰元', 'SEK': '瑞典克朗', 'NOK': '挪威克朗', 
+        'DKK': '丹麦克朗', 'PLN': '波兰兹罗提', 'TRY': '土耳其里拉', 'ZAR': '南非兰特', 
+        'MXN': '墨西哥比索', 'BRL': '巴西雷亚尔', 'AED': '阿联酋迪拉姆', 'SAR': '沙特里亚尔'
+    };
 
-    // DOM 元素
-    const amountEl = document.getElementById('amount');
-    const fromEl = document.getElementById('fromCurrency');
-    const toEl = document.getElementById('toCurrency');
-    const resultEl = document.getElementById('resultValue');
-    const rateInfoEl = document.getElementById('rateInfo');
-    const convertBtn = document.getElementById('convertBtn');
-    const swapBtn = document.getElementById('swapBtn');
-    
-    let chartInstance = null;
-    let exchangeRates = {}; // 存储所有汇率
+    const API_URL = 'https://api.exchangerate-api.com/v4/latest/USD';
+    let rates = {};
+    let chartInst = null;
 
-    // 初始化
+    // 获取中文名，若不在映射表中则显示代码
+    const getName = (code) => CURRENCY_NAMES[code] || code;
+
     async function init() {
+        const btn = document.getElementById('calcBtn');
         try {
-            convertBtn.innerText = "加载中...";
-            convertBtn.disabled = true;
-
-            const res = await fetch(API_URL);
-            if (!res.ok) throw new Error('网络请求失败');
+            btn.innerText = "数据加载中...";
+            btn.disabled = true;
             
+            const res = await fetch(API_URL);
+            if (!res.ok) throw new Error('API请求失败');
             const data = await res.json();
-            exchangeRates = data.rates;
+            rates = data.rates;
 
-            // 填充下拉菜单
-            populateSelect(fromEl, Object.keys(exchangeRates), 'USD');
-            populateSelect(toEl, Object.keys(exchangeRates), 'CNY');
-
-            // 初始计算一次
+            // 按中文名称排序后填充下拉框
+            const sortedCodes = Object.keys(rates).sort((a, b) => getName(a).localeCompare(getName(b), 'zh'));
+            
+            fillSelect('fromCur', sortedCodes, 'USD');
+            fillSelect('toCur', sortedCodes, 'CNY');
+            
             calculate();
-
-            convertBtn.innerText = "开始转换";
-            convertBtn.disabled = false;
-
-        } catch (error) {
-            console.error(error);
-            rateInfoEl.innerText = "API 加载失败，请检查网络或稍后重试";
-            resultEl.innerText = "Error";
+            btn.innerText = "开始转换";
+            btn.disabled = false;
+        } catch (e) {
+            console.error(e);
+            document.getElementById('rateInfo').innerText = "网络异常，请刷新重试";
         }
     }
 
-    // 填充下拉框辅助函数
-    function populateSelect(selectElement, currencies, defaultVal) {
-        selectElement.innerHTML = '';
-        currencies.forEach(currency => {
-            const option = document.createElement('option');
-            option.value = currency;
-            option.text = `${currency} - ${getCurrencyName(currency)}`;
-            if (currency === defaultVal) option.selected = true;
-            selectElement.appendChild(option);
-        });
+    function fillSelect(id, codes, defaultCode) {
+        const el = document.getElementById(id);
+        el.innerHTML = codes.map(c => `<option value="${c}" ${c===defaultCode?'selected':''}>${getName(c)}</option>`).join('');
     }
 
-    // 简单的货币名称映射 (部分)
-    function getCurrencyName(code) {
-        const names = {
-            'CNY': '人民币', 'USD': '美元', 'EUR': '欧元', 
-            'JPY': '日元', 'HKD': '港币', 'GBP': '英镑', 
-            'KRW': '韩元', 'TWD': '新台币'
-        };
-        return names[code] || code;
-    }
-
-    // 核心计算逻辑
     function calculate() {
-        const amount = parseFloat(amountEl.value);
-        const from = fromEl.value;
-        const to = toEl.value;
-
-        if (isNaN(amount)) {
-            resultEl.innerText = "---";
-            return;
-        }
-
-        // 计算逻辑：先转成基准货币(USD)，再转成目标货币
-        // 公式： Amount / Rate(Base) * Rate(Target)
-        const rateFrom = exchangeRates[from];
-        const rateTo = exchangeRates[to];
+        const amt = parseFloat(document.getElementById('amount').value);
+        const from = document.getElementById('fromCur').value;
+        const to = document.getElementById('toCur').value;
         
-        if (!rateFrom || !rateTo) {
-            resultEl.innerText = "汇率缺失";
-            return;
-        }
+        if (isNaN(amt)) return;
 
-        const rate = rateTo / rateFrom;
-        const result = (amount * rate).toFixed(2);
+        const rate = rates[to] / rates[from];
+        const result = (amt * rate).toFixed(2);
 
-        // 更新 UI
-        resultEl.innerText = `${result} ${to}`;
-        rateInfoEl.innerText = `1 ${from} ≈ ${rate.toFixed(4)} ${to}`;
-
-        // 更新图表 (模拟历史走势，因为免费API通常不提供历史数据)
+        document.getElementById('resVal').innerText = `${result} ${getName(to)}`;
+        document.getElementById('rateInfo').innerText = `1 ${getName(from)} ≈ ${rate.toFixed(4)} ${getName(to)}`;
+        
         updateChart(rate, from, to);
     }
 
-    // 绘制图表
-    function updateChart(currentRate, from, to) {
-        const ctx = document.getElementById('historyChart').getContext('2d');
-        
-        // 生成模拟的近7天数据 (基于当前汇率上下浮动)
+    function updateChart(curRate, from, to) {
+        const ctx = document.getElementById('chart').getContext('2d');
         const labels = ['6天前', '5天前', '4天前', '3天前', '2天前', '昨天', '今天'];
-        const dataPoints = [];
-        
-        for(let i=0; i<6; i++) {
-            // 简单的随机波动算法
-            const volatility = currentRate * 0.02; // 2% 波动
-            const randomChange = (Math.random() - 0.5) * volatility;
-            dataPoints.push(currentRate + randomChange);
-        }
-        dataPoints.push(currentRate); // 最后一个是真实值
+        const points = Array.from({length: 6}, () => curRate * (1 + (Math.random()-0.5)*0.02)).concat(curRate);
 
-        if (chartInstance) {
-            chartInstance.destroy();
-        }
-
-        chartInstance = new Chart(ctx, {
+        if (chartInst) chartInst.destroy();
+        chartInst = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: labels,
+                labels,
                 datasets: [{
-                    label: `${from} 兑 ${to} 汇率走势 (模拟)`,
-                    data: dataPoints,
+                    label: `${getName(from)} 兑 ${getName(to)} 走势`,
+                    data: points,
                     borderColor: '#4f46e5',
-                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    backgroundColor: 'rgba(79,70,229,0.1)',
                     tension: 0.4,
                     fill: true,
                     pointRadius: 3
@@ -339,34 +145,25 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: { beginAtZero: false }
-                }
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: false } }
             }
         });
     }
 
-    // 事件监听
-    convertBtn.addEventListener('click', calculate);
-    
-    swapBtn.addEventListener('click', () => {
-        const temp = fromEl.value;
-        fromEl.value = toEl.value;
-        toEl.value = temp;
+    // 事件绑定
+    document.getElementById('calcBtn').addEventListener('click', calculate);
+    document.getElementById('swapBtn').addEventListener('click', () => {
+        const f = document.getElementById('fromCur'), t = document.getElementById('toCur');
+        [f.value, t.value] = [t.value, f.value];
         calculate();
     });
+    ['amount', 'fromCur', 'toCur'].forEach(id => {
+        document.getElementById(id).addEventListener('input', calculate);
+        document.getElementById(id).addEventListener('change', calculate);
+    });
 
-    // 输入变化自动计算 (可选)
-    amountEl.addEventListener('input', calculate);
-    fromEl.addEventListener('change', calculate);
-    toEl.addEventListener('change', calculate);
-
-    // 启动
     init();
-
 </script>
 </body>
 </html>
