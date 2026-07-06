@@ -15,6 +15,7 @@
             --accent-light:   #fbbf24;
             --success:        #10b981;
             --danger:         #ef4444;
+            --predict:        #f97316;
 
             --bg-start:       #eef2ff;
             --bg-mid:         #e0e7ff;
@@ -28,7 +29,6 @@
             --radius-sm:      8px;
             --radius:         14px;
             --radius-lg:      22px;
-            --radius-xl:      28px;
 
             --shadow-sm:      0 1px 3px rgba(0,0,0,0.06);
             --shadow:         0 8px 30px rgba(99,102,241,0.12);
@@ -52,7 +52,6 @@
             align-items: flex-start;
             min-height: 100vh;
             line-height: 1.6;
-            /* 动态渐变背景 + 装饰光斑 */
             background:
                 radial-gradient(ellipse 80% 60% at 20% 10%, rgba(99,102,241,0.10) 0%, transparent 60%),
                 radial-gradient(ellipse 60% 50% at 85% 90%, rgba(16,185,129,0.08) 0%, transparent 60%),
@@ -61,10 +60,10 @@
             background-attachment: fixed;
         }
 
-        /* ========== 主容器：毛玻璃卡片 ========== */
+        /* ========== 主容器 ========== */
         .container {
             width: 100%;
-            max-width: 620px;
+            max-width: 780px;
             background: var(--card-bg);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
@@ -82,14 +81,8 @@
         }
 
         @keyframes cardAppear {
-            from {
-                opacity: 0;
-                transform: translateY(24px) scale(0.97);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(24px) scale(0.97); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         /* ========== 顶部装饰条 ========== */
@@ -121,9 +114,7 @@
         }
 
         /* ========== 表单区域 ========== */
-        .form-group {
-            margin-bottom: 22px;
-        }
+        .form-group { margin-bottom: 22px; }
 
         .form-label {
             display: flex;
@@ -137,10 +128,7 @@
             text-transform: uppercase;
         }
 
-        .label-icon {
-            font-size: 15px;
-            line-height: 1;
-        }
+        .label-icon { font-size: 15px; line-height: 1; }
 
         .form-input,
         .form-select {
@@ -153,11 +141,7 @@
             background: rgba(255,255,255,0.7);
             backdrop-filter: blur(4px);
             color: var(--text);
-            transition:
-                border-color var(--transition),
-                box-shadow var(--transition),
-                transform var(--transition),
-                background var(--transition);
+            transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition), background var(--transition);
             appearance: none;
             -webkit-appearance: none;
         }
@@ -176,27 +160,19 @@
             transform: translateY(-1px);
         }
 
-        /* select 自定义箭头 */
-        .select-wrapper {
-            position: relative;
-        }
+        .select-wrapper { position: relative; }
         .select-wrapper::after {
             content: '';
             position: absolute;
-            right: 16px;
-            top: 50%;
+            right: 16px; top: 50%;
             transform: translateY(-50%);
-            width: 0;
-            height: 0;
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
             border-top: 6px solid #94a3b8;
             pointer-events: none;
             transition: border-top-color var(--transition);
         }
-        .select-wrapper:focus-within::after {
-            border-top-color: var(--primary);
-        }
+        .select-wrapper:focus-within::after { border-top-color: var(--primary); }
 
         /* ========== 货币选择行 ========== */
         .currency-row {
@@ -205,10 +181,7 @@
             align-items: flex-end;
             margin-bottom: 22px;
         }
-
-        .currency-col {
-            flex: 1;
-        }
+        .currency-col { flex: 1; }
 
         /* ========== 交换按钮 ========== */
         .swap-btn {
@@ -217,8 +190,7 @@
             color: #fff;
             border: none;
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
+            width: 44px; height: 44px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -227,11 +199,8 @@
             font-size: 20px;
             flex-shrink: 0;
             box-shadow: 0 4px 12px rgba(99,102,241,0.3);
-            transition:
-                transform var(--transition),
-                box-shadow var(--transition);
+            transition: transform var(--transition), box-shadow var(--transition);
         }
-
         .swap-btn::before {
             content: '';
             position: absolute;
@@ -242,21 +211,13 @@
             transition: opacity var(--transition);
             z-index: -1;
         }
-
         .swap-btn:hover {
             transform: rotate(180deg) scale(1.08);
             box-shadow: 0 6px 20px rgba(99,102,241,0.45);
         }
         .swap-btn:hover::before { opacity: 0.4; }
-
-        .swap-btn:active {
-            transform: rotate(180deg) scale(0.95);
-        }
-
-        .swap-btn:focus-visible {
-            outline: 3px solid var(--primary-light);
-            outline-offset: 3px;
-        }
+        .swap-btn:active { transform: rotate(180deg) scale(0.95); }
+        .swap-btn:focus-visible { outline: 3px solid var(--primary-light); outline-offset: 3px; }
 
         /* ========== 主按钮 ========== */
         .btn-primary {
@@ -273,59 +234,37 @@
             letter-spacing: 0.04em;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             box-shadow: 0 6px 18px rgba(99,102,241,0.3);
-            transition:
-                transform var(--transition),
-                box-shadow var(--transition),
-                filter var(--transition);
+            transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
             overflow: hidden;
         }
-
-        /* 按钮光泽 */
         .btn-primary::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
             transition: left 0.6s ease;
         }
-
         .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 10px 28px rgba(99,102,241,0.4);
             filter: brightness(1.05);
         }
-
-        .btn-primary:hover:not(:disabled)::after {
-            left: 100%;
-        }
-
-        .btn-primary:active:not(:disabled) {
-            transform: translateY(0) scale(0.98);
-        }
-
+        .btn-primary:hover:not(:disabled)::after { left: 100%; }
+        .btn-primary:active:not(:disabled) { transform: translateY(0) scale(0.98); }
         .btn-primary:disabled {
             background: linear-gradient(135deg, #cbd5e1, #94a3b8);
             box-shadow: none;
             cursor: not-allowed;
             filter: none;
         }
+        .btn-primary:focus-visible { outline: 3px solid var(--primary-light); outline-offset: 3px; }
 
-        .btn-primary:focus-visible {
-            outline: 3px solid var(--primary-light);
-            outline-offset: 3px;
-        }
-
-        /* 加载动画 */
         @keyframes btnPulse {
             0%, 100% { opacity: 1; }
             50%      { opacity: 0.6; }
         }
-        .btn-primary.is-loading {
-            animation: btnPulse 1.4s ease-in-out infinite;
-        }
+        .btn-primary.is-loading { animation: btnPulse 1.4s ease-in-out infinite; }
 
         /* ========== 结果展示 ========== */
         .result-box {
@@ -339,21 +278,16 @@
             overflow: hidden;
             animation: resultIn 0.5s ease both;
         }
-
         @keyframes resultIn {
             from { opacity: 0; transform: translateY(10px); }
             to   { opacity: 1; transform: translateY(0); }
         }
-
-        /* 结果区装饰角标 */
         .result-box::before {
             content: '';
             position: absolute;
-            top: -1px;
-            left: 50%;
+            top: -1px; left: 50%;
             transform: translateX(-50%);
-            width: 60%;
-            height: 2px;
+            width: 60%; height: 2px;
             border-radius: 1px;
             background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
         }
@@ -370,8 +304,6 @@
             transition: all var(--transition);
             word-break: break-all;
         }
-
-        /* 数值更新闪烁 */
         .result-value.is-updated {
             animation: valueFlash 0.5s ease;
         }
@@ -380,31 +312,74 @@
             50%      { transform: scale(1.04); }
         }
 
-        .result-info {
-            font-size: 14px;
-            color: var(--text-sub);
+        .result-info { font-size: 14px; color: var(--text-sub); }
+
+        /* ========== 图表网格布局 ========== */
+        .charts-section {
+            margin-top: 28px;
         }
 
-        /* ========== 图表区 ========== */
-        .chart-container {
-            margin-top: 28px;
-            height: 220px;
-            width: 100%;
-            position: relative;
-            padding: 16px 12px 12px;
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .chart-panel {
             background: rgba(255,255,255,0.55);
             border-radius: var(--radius);
             border: 1px solid rgba(226,232,240,0.8);
+            padding: 16px 12px 12px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .chart-label {
-            text-align: center;
-            font-size: 12px;
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .chart-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 0.03em;
+        }
+
+        .chart-badge {
+            font-size: 10px;
             font-weight: 600;
-            color: var(--text-sub);
-            letter-spacing: 0.05em;
+            padding: 2px 8px;
+            border-radius: 10px;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
-            margin-bottom: 4px;
+        }
+
+        .chart-badge--history {
+            background: rgba(99,102,241,0.12);
+            color: var(--primary-dark);
+        }
+
+        .chart-badge--predict {
+            background: rgba(249,115,22,0.12);
+            color: var(--predict);
+        }
+
+        .chart-body {
+            flex: 1;
+            position: relative;
+            min-height: 230px;
+        }
+
+        /* 预测置信度提示 */
+        .prediction-note {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-top: 6px;
         }
 
         /* ========== 状态提示 ========== */
@@ -412,33 +387,32 @@
         .status-error  { color: var(--danger); }
 
         /* ========== 响应式 ========== */
-        @media (max-width: 480px) {
+        @media (max-width: 700px) {
             body { padding: 12px; }
             .container { padding: 24px 18px; border-radius: var(--radius); }
             .title { font-size: 21px; }
             .result-value { font-size: 28px; }
-            .chart-container { height: 180px; }
-            .currency-row {
-                flex-direction: column;
-                gap: 12px;
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
             }
+            .chart-body { min-height: 200px; }
+
+            .currency-row { flex-direction: column; gap: 12px; }
             .swap-btn {
                 align-self: center;
                 margin-bottom: 0;
                 transform: rotate(90deg);
             }
-            .swap-btn:hover {
-                transform: rotate(270deg) scale(1.08);
-            }
+            .swap-btn:hover { transform: rotate(270deg) scale(1.08); }
         }
 
         /* ========== 无障碍 ========== */
         .sr-only {
             position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
             overflow: hidden;
             clip: rect(0,0,0,0);
             white-space: nowrap;
@@ -448,11 +422,7 @@
         /* ========== 打印 ========== */
         @media print {
             body { background: #fff; padding: 0; }
-            .container {
-                box-shadow: none;
-                backdrop-filter: none;
-                border: none;
-            }
+            .container { box-shadow: none; backdrop-filter: none; border: none; }
             .btn-primary, .swap-btn, .header-accent { display: none; }
         }
     </style>
@@ -461,10 +431,8 @@
 
     <main class="container" role="main">
 
-        <!-- 顶部装饰条 -->
         <div class="header-accent" aria-hidden="true"></div>
 
-        <!-- 标题 -->
         <h1 class="title">💱 全球实时汇率看板</h1>
 
         <!-- 金额输入 -->
@@ -497,13 +465,7 @@
                 </div>
             </div>
 
-            <button
-                class="swap-btn"
-                id="swapBtn"
-                type="button"
-                aria-label="交换源货币与目标货币"
-                title="交换源货币与目标货币"
-            >⇄</button>
+            <button class="swap-btn" id="swapBtn" type="button" aria-label="交换源货币与目标货币" title="交换货币">⇄</button>
 
             <div class="currency-col">
                 <label class="form-label" for="toCur">
@@ -515,10 +477,7 @@
             </div>
         </div>
 
-        <!-- 转换按钮 -->
-        <button class="btn-primary" id="calcBtn" type="button">
-            ⚡ 开始转换
-        </button>
+        <button class="btn-primary" id="calcBtn" type="button">⚡ 开始转换</button>
 
         <!-- 结果展示 -->
         <section class="result-box" aria-live="polite" aria-atomic="true">
@@ -526,10 +485,34 @@
             <div class="result-value" id="resVal" aria-label="转换结果">---</div>
         </section>
 
-        <!-- 图表 -->
-        <section class="chart-container" aria-label="汇率走势图">
-            <div class="chart-label">📈 近7日汇率走势</div>
-            <canvas id="chart"></canvas>
+        <!-- 双图表区域 -->
+        <section class="charts-section" aria-label="汇率图表">
+            <div class="charts-grid">
+
+                <!-- 历史走势 -->
+                <div class="chart-panel">
+                    <div class="chart-header">
+                        <span class="chart-title">📈 历史走势</span>
+                        <span class="chart-badge chart-badge--history">7 天</span>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="chartHistory"></canvas>
+                    </div>
+                </div>
+
+                <!-- 趋势预测 -->
+                <div class="chart-panel">
+                    <div class="chart-header">
+                        <span class="chart-title">🔮 趋势预测</span>
+                        <span class="chart-badge chart-badge--predict">未来 3 天</span>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="chartPredict"></canvas>
+                    </div>
+                    <div class="prediction-note">基于近 7 日数据线性回归预测，仅供参考</div>
+                </div>
+
+            </div>
         </section>
 
     </main>
@@ -553,22 +536,39 @@
         const STALE_MS  = 30 * 60 * 1000;
         const CACHE_KEY = 'fx_rates_cache';
 
+        const HISTORY_DAYS  = 7;
+        const PREDICT_DAYS  = 3;
+
+        const COLORS = {
+            historyLine:  '#6366f1',
+            historyFill:  ['rgba(99,102,241,0.25)', 'rgba(99,102,241,0.02)'],
+            historyPoint: '#6366f1',
+            predictLine:  '#f97316',
+            predictFill:  ['rgba(249,115,22,0.15)', 'rgba(249,115,22,0.01)'],
+            predictPoint: '#f97316',
+            separator:    '#94a3b8',
+            grid:         'rgba(226,232,240,0.6)',
+            tick:         '#94a3b8',
+        };
+
         // ========== DOM 引用 ==========
         const $ = (id) => document.getElementById(id);
         const dom = {
-            amount:   $('amount'),
-            fromCur:  $('fromCur'),
-            toCur:    $('toCur'),
-            calcBtn:  $('calcBtn'),
-            swapBtn:  $('swapBtn'),
-            rateInfo: $('rateInfo'),
-            resVal:   $('resVal'),
-            chart:    $('chart'),
+            amount:       $('amount'),
+            fromCur:      $('fromCur'),
+            toCur:        $('toCur'),
+            calcBtn:      $('calcBtn'),
+            swapBtn:      $('swapBtn'),
+            rateInfo:     $('rateInfo'),
+            resVal:       $('resVal'),
+            chartHistory: $('chartHistory'),
+            chartPredict: $('chartPredict'),
         };
 
         // ========== 状态 ==========
-        let rates     = {};
-        let chartInst = null;
+        let rates        = {};
+        let chartHistory = null;
+        let chartPredict = null;
 
         // ========== 工具函数 ==========
         const getName = (code) => CURRENCY_NAMES[code] || code;
@@ -585,13 +585,80 @@
 
         function saveRatesCache(data) {
             try { localStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() })); }
-            catch { /* quota exceeded, silently ignore */ }
+            catch { /* ignore */ }
+        }
+
+        /**
+         * 种子伪随机数生成器 (mulberry32)
+         * 保证同一对货币 + 同一天始终生成相同的"历史数据"
+         */
+        function mulberry32(a) {
+            return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+        }
+
+        /**
+         * 生成确定性的历史汇率序列（基于 from+to 字符串做种子）
+         */
+        function generateHistory(curRate, fromCode, toCode) {
+            const seedStr = fromCode + '_' + toCode;
+            let seed = 0;
+            for (let i = 0; i < seedStr.length; i++) {
+                seed = ((seed << 5) - seed) + seedStr.charCodeAt(i);
+                seed |= 0;
+            }
+            const rand = mulberry32(Math.abs(seed));
+
+            const points = [];
+            // 从 6 天前推导到今天的值
+            let val = curRate;
+            for (let i = 0; i < 6; i++) {
+                val /= (1 + (rand() - 0.5) * 0.04);
+            }
+            // 现在 val 是 6 天前的值，逐步走向今天
+            points.push(val);
+            for (let i = 1; i < HISTORY_DAYS; i++) {
+                const jitter = 1 + (rand() - 0.5) * 0.04;
+                points.push(points[i - 1] * jitter);
+            }
+            return points;
+        }
+
+        /**
+         * 简单线性回归
+         * 返回 { slope, intercept, predict(x) }
+         */
+        function linearRegression(xs, ys) {
+            const n = xs.length;
+            let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+            for (let i = 0; i < n; i++) {
+                sumX  += xs[i];
+                sumY  += ys[i];
+                sumXY += xs[i] * ys[i];
+                sumX2 += xs[i] * xs[i];
+            }
+            const slope     = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+            const intercept = (sumY - slope * sumX) / n;
+            return {
+                slope,
+                intercept,
+                predict: (x) => slope * x + intercept,
+            };
+        }
+
+        /**
+         * 创建渐变填充
+         */
+        function createGradient(ctx, height, colorStops) {
+            const grad = ctx.createLinearGradient(0, 0, 0, height);
+            grad.addColorStop(0, colorStops[0]);
+            grad.addColorStop(1, colorStops[1]);
+            return grad;
         }
 
         // ========== 数值闪烁动画 ==========
         function flashResultValue() {
             dom.resVal.classList.remove('is-updated');
-            void dom.resVal.offsetWidth; // 强制回流
+            void dom.resVal.offsetWidth;
             dom.resVal.classList.add('is-updated');
         }
 
@@ -664,7 +731,6 @@
 
             const from = dom.fromCur.value;
             const to   = dom.toCur.value;
-
             if (!rates[from] || !rates[to]) return;
 
             const rate     = rates[to] / rates[from];
@@ -676,88 +742,252 @@
             dom.rateInfo.innerText = `1 ${fromName} ≈ ${rate.toFixed(4)} ${toName}`;
             flashResultValue();
 
-            updateChart(rate, from, to);
+            renderCharts(rate, from, to);
         }
 
-        // ========== 图表更新 ==========
-        function updateChart(curRate, from, to) {
-            const ctx = dom.chart.getContext('2d');
-
-            // 从 6 天前到今天的模拟走势
-            const points = [];
-            for (let i = 0; i <= 6; i++) {
-                if (i === 0) {
-                    let val = curRate;
-                    for (let j = 0; j < 6; j++) {
-                        val /= (1 + (Math.random() - 0.5) * 0.04);
-                    }
-                    points.push(val);
-                } else {
-                    const jitter = 1 + (Math.random() - 0.5) * 0.04;
-                    points.push(points[i - 1] * jitter);
-                }
-            }
-
+        // ========== 图表渲染 ==========
+        function renderCharts(curRate, from, to) {
             const fromName = getName(from);
             const toName   = getName(to);
+            const pairLabel = `${fromName} → ${toName}`;
 
-            const gradient = ctx.createLinearGradient(0, 0, 0, 200);
-            gradient.addColorStop(0, 'rgba(99,102,241,0.25)');
-            gradient.addColorStop(1, 'rgba(99,102,241,0.02)');
+            // 生成确定性历史数据
+            const historyData = generateHistory(curRate, from, to);
 
-            const chartData = {
-                labels: ['6天前', '5天前', '4天前', '3天前', '2天前', '昨天', '今天'],
+            // 线性回归预测
+            const xs = Array.from({ length: HISTORY_DAYS }, (_, i) => i);
+            const reg = linearRegression(xs, historyData);
+            const predictData = [];
+            for (let i = 0; i < PREDICT_DAYS; i++) {
+                predictData.push(reg.predict(HISTORY_DAYS + i));
+            }
+
+            renderHistoryChart(curRate, fromName, toName, pairLabel, historyData);
+            renderPredictChart(curRate, fromName, toName, pairLabel, historyData, predictData);
+        }
+
+        // ========== 图表 1：历史走势 ==========
+        function renderHistoryChart(curRate, fromName, toName, pairLabel, historyData) {
+            const ctx  = dom.chartHistory.getContext('2d');
+            const grad = createGradient(ctx, 230, COLORS.historyFill);
+
+            const labels   = ['6天前', '5天前', '4天前', '3天前', '2天前', '昨天', '今天'];
+            const minVal   = Math.min(...historyData) * 0.998;
+            const maxVal   = Math.max(...historyData) * 1.002;
+
+            const data = {
+                labels,
                 datasets: [{
-                    label: `${fromName} → ${toName}`,
-                    data: points,
-                    borderColor: '#6366f1',
-                    backgroundColor: gradient,
+                    label: pairLabel,
+                    data: historyData,
+                    borderColor: COLORS.historyLine,
+                    backgroundColor: grad,
                     tension: 0.4,
                     fill: true,
-                    pointRadius: 3,
+                    pointRadius: historyData.map((_, i) => i === HISTORY_DAYS - 1 ? 5 : 3),
                     pointHoverRadius: 6,
-                    pointBackgroundColor: '#6366f1',
+                    pointBackgroundColor: COLORS.historyPoint,
                     pointBorderColor: '#fff',
                     pointBorderWidth: 2,
                     borderWidth: 2.5,
                 }]
             };
 
-            const chartOpts = {
+            const opts = commonChartOpts(fromName, toName, '历史汇率走势', minVal, maxVal);
+
+            if (chartHistory) {
+                chartHistory.data = data;
+                chartHistory.options = opts;
+                chartHistory.update();
+            } else {
+                chartHistory = new Chart(ctx, { type: 'line', data, options: opts });
+            }
+        }
+
+        // ========== 图表 2：趋势预测 ==========
+        function renderPredictChart(curRate, fromName, toName, pairLabel, historyData, predictData) {
+            const ctx  = dom.chartPredict.getContext('2d');
+
+            const histGrad   = createGradient(ctx, 230, COLORS.historyFill);
+            const predictGrad = createGradient(ctx, 230, COLORS.predictFill);
+
+            const allLabels  = [
+                '6天前', '5天前', '4天前', '3天前', '2天前', '昨天', '今天',
+                '明天', '后天', '3天后'
+            ];
+
+            // 历史线：实线 + 填充，前 7 个点
+            const histDataset = {
+                label: '历史汇率',
+                data: [...historyData, null, null, null],
+                borderColor: COLORS.historyLine,
+                backgroundColor: histGrad,
+                tension: 0.4,
+                fill: true,
+                pointRadius: historyData.map((_, i) => i === HISTORY_DAYS - 1 ? 5 : 3),
+                pointHoverRadius: 6,
+                pointBackgroundColor: COLORS.historyPoint,
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                borderWidth: 2.5,
+                order: 1,
+            };
+
+            // 预测线：虚线 + 无填充，从"今天"开始
+            const predictDataset = {
+                label: '预测汇率',
+                data: [null, null, null, null, null, null, historyData[HISTORY_DAYS - 1], ...predictData],
+                borderColor: COLORS.predictLine,
+                backgroundColor: predictGrad,
+                tension: 0.4,
+                fill: true,
+                pointRadius: [0, 0, 0, 0, 0, 0, 5, 4, 4, 4],
+                pointHoverRadius: 6,
+                pointBackgroundColor: COLORS.predictPoint,
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                borderWidth: 2.5,
+                borderDash: [6, 3],
+                order: 0,
+            };
+
+            const allVals = [...historyData, ...predictData];
+            const minVal  = Math.min(...allVals) * 0.998;
+            const maxVal  = Math.max(...allVals) * 1.002;
+
+            // 自定义插件：绘制预测区域分隔线 + 背景
+            const separatorPlugin = {
+                id: 'predictionSeparator',
+                afterDraw(chart) {
+                    const { ctx, chartArea, scales } = chart;
+                    const xAxis = scales.x;
+                    // "今天" 在第 6 个索引位置（0-based）
+                    const todayIdx = 6;
+                    const xPos = xAxis.getPixelForValue(allLabels[todayIdx]);
+
+                    // 预测区域半透明背景
+                    const predictStartX = xPos;
+                    const predictEndX   = chartArea.right;
+                    ctx.save();
+                    ctx.fillStyle = 'rgba(249,115,22,0.04)';
+                    ctx.fillRect(predictStartX, chartArea.top, predictEndX - predictStartX, chartArea.bottom - chartArea.top);
+
+                    // 分隔虚线
+                    ctx.beginPath();
+                    ctx.setLineDash([4, 4]);
+                    ctx.strokeStyle = COLORS.separator;
+                    ctx.lineWidth = 1.5;
+                    ctx.moveTo(xPos, chartArea.top);
+                    ctx.lineTo(xPos, chartArea.bottom);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+
+                    // "预测" 标签
+                    const labelX = (predictStartX + predictEndX) / 2;
+                    const labelY = chartArea.top + 14;
+                    ctx.font = 'bold 11px -apple-system, "Microsoft YaHei", sans-serif';
+                    ctx.fillStyle = COLORS.predictLine;
+                    ctx.textAlign = 'center';
+                    ctx.fillText('预测区域', labelX, labelY);
+
+                    ctx.restore();
+                }
+            };
+
+            const data = {
+                labels: allLabels,
+                datasets: [histDataset, predictDataset],
+            };
+
+            const opts = commonChartOpts(fromName, toName, '汇率走势与预测', minVal, maxVal);
+            opts.plugins.legend = {
+                display: true,
+                position: 'bottom',
+                labels: {
+                    usePointStyle: true,
+                    pointStyleWidth: 8,
+                    padding: 16,
+                    font: { size: 11 },
+                    color: '#64748b',
+                }
+            };
+
+            // 注册分隔线插件
+            if (chartPredict) {
+                chartPredict.data = data;
+                chartPredict.options = opts;
+                chartPredict.update();
+            } else {
+                chartPredict = new Chart(ctx, {
+                    type: 'line',
+                    data,
+                    options: opts,
+                    plugins: [separatorPlugin],
+                });
+            }
+        }
+
+        // ========== 通用图表配置 ==========
+        function commonChartOpts(fromName, toName, title, minVal, maxVal) {
+            return {
                 responsive: true,
                 maintainAspectRatio: false,
-                animation: {
-                    duration: 800,
-                    easing: 'easeOutQuart',
-                },
+                animation: { duration: 800, easing: 'easeOutQuart' },
                 plugins: {
                     legend: { display: false },
                     tooltip: {
                         mode: 'index',
                         intersect: false,
-                        backgroundColor: 'rgba(30,41,59,0.9)',
-                        titleFont: { size: 13 },
+                        backgroundColor: 'rgba(30,41,59,0.92)',
+                        titleFont: { size: 12, weight: 'bold' },
                         bodyFont: { size: 12 },
-                        padding: 10,
+                        padding: 12,
                         cornerRadius: 8,
-                        displayColors: false,
+                        displayColors: true,
+                        boxPadding: 4,
                         callbacks: {
-                            label: (ctx) => `${fromName} → ${toName}: ${ctx.parsed.y.toFixed(4)}`,
+                            label: (ctx) => {
+                                const val = ctx.parsed.y;
+                                if (val == null) return '';
+                                const dsLabel = ctx.dataset.label || '';
+                                return `${dsLabel}: ${val.toFixed(6)} ${toName}`;
+                            }
                         }
                     }
                 },
                 scales: {
                     x: {
+                        title: {
+                            display: true,
+                            text: '日期',
+                            font: { size: 11, weight: 'bold' },
+                            color: '#64748b',
+                        },
                         grid: { display: false },
-                        ticks: { font: { size: 11 }, color: '#94a3b8' }
+                        ticks: {
+                            font: { size: 10 },
+                            color: '#94a3b8',
+                            maxRotation: 0,
+                        }
                     },
                     y: {
-                        beginAtZero: false,
-                        grid: { color: 'rgba(226,232,240,0.6)' },
+                        title: {
+                            display: true,
+                            text: `汇率 (${fromName}/${toName})`,
+                            font: { size: 11, weight: 'bold' },
+                            color: '#64748b',
+                        },
+                        min: minVal,
+                        max: maxVal,
+                        grid: {
+                            color: 'rgba(226,232,240,0.5)',
+                            drawBorder: false,
+                        },
                         ticks: {
-                            font: { size: 11 },
+                            font: { size: 10 },
                             color: '#94a3b8',
-                            callback: (val) => val.toFixed(4)
+                            callback: (val) => val.toFixed(4),
+                            count: 5,
                         },
                     }
                 },
@@ -765,20 +995,8 @@
                     mode: 'nearest',
                     axis: 'x',
                     intersect: false,
-                }
+                },
             };
-
-            if (chartInst) {
-                chartInst.data = chartData;
-                chartInst.options = chartOpts;
-                chartInst.update();
-            } else {
-                chartInst = new Chart(ctx, {
-                    type: 'line',
-                    data: chartData,
-                    options: chartOpts
-                });
-            }
         }
 
         // ========== 交换货币 ==========
@@ -792,7 +1010,6 @@
         // ========== 事件绑定 ==========
         dom.calcBtn.addEventListener('click', calculate);
         dom.swapBtn.addEventListener('click', swapCurrencies);
-
         dom.amount.addEventListener('input', calculate);
         dom.fromCur.addEventListener('change', calculate);
         dom.toCur.addEventListener('change', calculate);
