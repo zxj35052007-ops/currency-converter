@@ -463,18 +463,22 @@
         function updateChart(curRate, from, to) {
             const ctx = dom.chart.getContext('2d');
 
-            // 使用更真实的模拟走势（基于当前汇率的随机波动）
+            // 基于当前汇率的模拟走势（随机波动）
             const points = [];
             for (let i = 6; i >= 0; i--) {
-                const jitter = 1 + (Math.random() - 0.5) * 0.04;
-                points.push(i === 6 ? curRate : points[points.length - 1] * jitter);
+                if (i === 6) {
+                    points.push(curRate);
+                } else {
+                    const jitter = 1 + (Math.random() - 0.5) * 0.04;
+                    points.push(points[points.length - 1] * jitter);
+                }
             }
 
             const chartData = {
                 labels: ['6天前', '5天前', '4天前', '3天前', '2天前', '昨天', '今天'],
                 datasets: [{
                     label: `${getName(from)} 兑 ${getName(to)} 走势`,
-                   ,
+                    data: points,
                     borderColor: '#4f46e5',
                     backgroundColor: 'rgba(79,70,229,0.1)',
                     tension: 0.4,
