@@ -8,96 +8,202 @@
     <style>
         /* ========== CSS 变量 ========== */
         :root {
-            --primary: #4f46e5;
-            --primary-light: rgba(79, 70, 229, 0.1);
-            --bg: #f3f4f6;
-            --card: #fff;
-            --text: #1f2937;
-            --text-sub: #6b7280;
-            --border: #e5e7eb;
-            --border-dashed: #d1d5db;
-            --radius: 8px;
-            --radius-lg: 16px;
-            --shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-            --transition: 0.2s ease;
+            --primary:        #6366f1;
+            --primary-dark:   #4f46e5;
+            --primary-light:  #818cf8;
+            --accent:         #f59e0b;
+            --accent-light:   #fbbf24;
+            --success:        #10b981;
+            --danger:         #ef4444;
+
+            --bg-start:       #eef2ff;
+            --bg-mid:         #e0e7ff;
+            --bg-end:         #f0fdf4;
+            --card-bg:        rgba(255,255,255,0.85);
+            --card-border:    rgba(255,255,255,0.6);
+
+            --text:           #1e293b;
+            --text-sub:       #64748b;
+
+            --radius-sm:      8px;
+            --radius:         14px;
+            --radius-lg:      22px;
+            --radius-xl:      28px;
+
+            --shadow-sm:      0 1px 3px rgba(0,0,0,0.06);
+            --shadow:         0 8px 30px rgba(99,102,241,0.12);
+            --shadow-lg:      0 20px 50px rgba(99,102,241,0.18);
+            --shadow-glow:    0 0 30px rgba(99,102,241,0.25);
+
+            --transition:     0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow:0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ========== 重置与基础 ========== */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
+        /* ========== 全局重置 ========== */
+        *, *::before, *::after { box-sizing: border-box; }
 
         body {
             font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif;
-            background: var(--bg);
             color: var(--text);
             margin: 0;
-            padding: 20px;
+            padding: 24px;
             display: flex;
             justify-content: center;
+            align-items: flex-start;
             min-height: 100vh;
             line-height: 1.6;
+            /* 动态渐变背景 + 装饰光斑 */
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(99,102,241,0.10) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 85% 90%, rgba(16,185,129,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(245,158,11,0.06) 0%, transparent 60%),
+                linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 40%, var(--bg-end) 100%);
+            background-attachment: fixed;
         }
 
-        /* ========== 主容器 ========== */
+        /* ========== 主容器：毛玻璃卡片 ========== */
         .container {
             width: 100%;
-            max-width: 600px;
-            background: var(--card);
+            max-width: 620px;
+            background: var(--card-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--card-border);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow);
-            padding: 30px;
+            box-shadow: var(--shadow), var(--shadow-sm);
+            padding: 36px 32px;
             height: fit-content;
+            animation: cardAppear 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+            transition: box-shadow var(--transition-slow);
+        }
+
+        .container:hover {
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(24px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ========== 顶部装饰条 ========== */
+        .header-accent {
+            width: 60px;
+            height: 4px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 0 auto 20px;
+            animation: accentPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes accentPulse {
+            0%, 100% { opacity: 0.7; width: 60px; }
+            50%      { opacity: 1;   width: 80px; }
         }
 
         /* ========== 标题 ========== */
         .title {
             text-align: center;
-            color: var(--primary);
-            margin: 0 0 30px;
-            font-size: 24px;
-            font-weight: 700;
+            margin: 0 0 28px;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 40%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* ========== 表单元素 ========== */
+        /* ========== 表单区域 ========== */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .form-label {
-            display: block;
-            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
             color: var(--text-sub);
             margin-bottom: 8px;
             font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .label-icon {
+            font-size: 15px;
+            line-height: 1;
         }
 
         .form-input,
         .form-select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
+            padding: 13px 16px;
+            border: 1.5px solid #e2e8f0;
             border-radius: var(--radius);
             font-size: 16px;
             outline: none;
-            transition: border-color var(--transition), box-shadow var(--transition);
-            background: #fff;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(4px);
+            color: var(--text);
+            transition:
+                border-color var(--transition),
+                box-shadow var(--transition),
+                transform var(--transition),
+                background var(--transition);
             appearance: none;
             -webkit-appearance: none;
+        }
+
+        .form-input:hover,
+        .form-select:hover {
+            border-color: #c7d2fe;
+            background: rgba(255,255,255,0.9);
         }
 
         .form-input:focus,
         .form-select:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-light);
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.12), 0 4px 12px rgba(99,102,241,0.08);
+            background: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* select 自定义箭头 */
+        .select-wrapper {
+            position: relative;
+        }
+        .select-wrapper::after {
+            content: '';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid #94a3b8;
+            pointer-events: none;
+            transition: border-top-color var(--transition);
+        }
+        .select-wrapper:focus-within::after {
+            border-top-color: var(--primary);
         }
 
         /* ========== 货币选择行 ========== */
         .currency-row {
             display: flex;
-            gap: 15px;
+            gap: 14px;
             align-items: flex-end;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .currency-col {
@@ -106,75 +212,172 @@
 
         /* ========== 交换按钮 ========== */
         .swap-btn {
-            background: var(--primary);
+            position: relative;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
             border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 2px;
-            transition: transform var(--transition);
-            font-size: 18px;
+            font-size: 20px;
             flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+            transition:
+                transform var(--transition),
+                box-shadow var(--transition);
+        }
+
+        .swap-btn::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: opacity var(--transition);
+            z-index: -1;
         }
 
         .swap-btn:hover {
-            transform: rotate(180deg);
+            transform: rotate(180deg) scale(1.08);
+            box-shadow: 0 6px 20px rgba(99,102,241,0.45);
+        }
+        .swap-btn:hover::before { opacity: 0.4; }
+
+        .swap-btn:active {
+            transform: rotate(180deg) scale(0.95);
         }
 
         .swap-btn:focus-visible {
-            outline: 2px solid var(--primary);
-            outline-offset: 2px;
+            outline: 3px solid var(--primary-light);
+            outline-offset: 3px;
         }
 
         /* ========== 主按钮 ========== */
         .btn-primary {
+            position: relative;
             width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: #fff;
+            padding: 15px;
             border: none;
             border-radius: var(--radius);
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            margin-top: 10px;
-            transition: background var(--transition);
+            margin-top: 8px;
+            color: #fff;
+            letter-spacing: 0.04em;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            box-shadow: 0 6px 18px rgba(99,102,241,0.3);
+            transition:
+                transform var(--transition),
+                box-shadow var(--transition),
+                filter var(--transition);
+            overflow: hidden;
+        }
+
+        /* 按钮光泽 */
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.6s ease;
         }
 
         .btn-primary:hover:not(:disabled) {
-            background: #4338ca;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(99,102,241,0.4);
+            filter: brightness(1.05);
+        }
+
+        .btn-primary:hover:not(:disabled)::after {
+            left: 100%;
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: translateY(0) scale(0.98);
         }
 
         .btn-primary:disabled {
-            background: #9ca3af;
+            background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+            box-shadow: none;
             cursor: not-allowed;
+            filter: none;
         }
 
         .btn-primary:focus-visible {
-            outline: 2px solid var(--primary);
-            outline-offset: 2px;
+            outline: 3px solid var(--primary-light);
+            outline-offset: 3px;
+        }
+
+        /* 加载动画 */
+        @keyframes btnPulse {
+            0%, 100% { opacity: 1; }
+            50%      { opacity: 0.6; }
+        }
+        .btn-primary.is-loading {
+            animation: btnPulse 1.4s ease-in-out infinite;
         }
 
         /* ========== 结果展示 ========== */
         .result-box {
-            background: #f9fafb;
-            border: 1px dashed var(--border-dashed);
-            border-radius: var(--radius);
-            padding: 20px;
+            position: relative;
+            margin-top: 28px;
+            padding: 24px 20px;
             text-align: center;
-            margin-top: 30px;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, rgba(99,102,241,0.04) 0%, rgba(16,185,129,0.04) 100%);
+            border: 1px solid rgba(99,102,241,0.15);
+            overflow: hidden;
+            animation: resultIn 0.5s ease both;
+        }
+
+        @keyframes resultIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 结果区装饰角标 */
+        .result-box::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            border-radius: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
         }
 
         .result-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--primary);
-            margin: 10px 0;
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-dark), #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 12px 0;
+            letter-spacing: -0.02em;
+            transition: all var(--transition);
+            word-break: break-all;
+        }
+
+        /* 数值更新闪烁 */
+        .result-value.is-updated {
+            animation: valueFlash 0.5s ease;
+        }
+        @keyframes valueFlash {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.04); }
         }
 
         .result-info {
@@ -182,37 +385,42 @@
             color: var(--text-sub);
         }
 
-        /* ========== 图表 ========== */
+        /* ========== 图表区 ========== */
         .chart-container {
-            margin-top: 30px;
-            height: 200px;
+            margin-top: 28px;
+            height: 220px;
             width: 100%;
             position: relative;
+            padding: 16px 12px 12px;
+            background: rgba(255,255,255,0.55);
+            border-radius: var(--radius);
+            border: 1px solid rgba(226,232,240,0.8);
+        }
+
+        .chart-label {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-sub);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
         }
 
         /* ========== 状态提示 ========== */
-        .status-loading {
-            color: var(--primary);
-        }
-
-        .status-error {
-            color: #ef4444;
-        }
+        .status-loading { color: var(--primary); }
+        .status-error  { color: var(--danger); }
 
         /* ========== 响应式 ========== */
         @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            .container {
-                padding: 20px;
-            }
-            .title {
-                font-size: 20px;
-            }
+            body { padding: 12px; }
+            .container { padding: 24px 18px; border-radius: var(--radius); }
+            .title { font-size: 21px; }
+            .result-value { font-size: 28px; }
+            .chart-container { height: 180px; }
             .currency-row {
                 flex-direction: column;
-                gap: 10px;
+                gap: 12px;
             }
             .swap-btn {
                 align-self: center;
@@ -220,11 +428,11 @@
                 transform: rotate(90deg);
             }
             .swap-btn:hover {
-                transform: rotate(270deg);
+                transform: rotate(270deg) scale(1.08);
             }
         }
 
-        /* ========== 无障碍：屏幕阅读器专用 ========== */
+        /* ========== 无障碍 ========== */
         .sr-only {
             position: absolute;
             width: 1px;
@@ -232,38 +440,38 @@
             padding: 0;
             margin: -1px;
             overflow: hidden;
-            clip: rect(0, 0, 0, 0);
+            clip: rect(0,0,0,0);
             white-space: nowrap;
             border-width: 0;
         }
 
-        /* ========== 打印样式 ========== */
+        /* ========== 打印 ========== */
         @media print {
-            body {
-                background: #fff;
-                padding: 0;
-            }
+            body { background: #fff; padding: 0; }
             .container {
                 box-shadow: none;
+                backdrop-filter: none;
+                border: none;
             }
-            .btn-primary,
-            .swap-btn {
-                display: none;
-            }
+            .btn-primary, .swap-btn, .header-accent { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 主容器 -->
     <main class="container" role="main">
+
+        <!-- 顶部装饰条 -->
+        <div class="header-accent" aria-hidden="true"></div>
 
         <!-- 标题 -->
         <h1 class="title">💱 全球实时汇率看板</h1>
 
         <!-- 金额输入 -->
         <div class="form-group">
-            <label class="form-label" for="amount">金额</label>
+            <label class="form-label" for="amount">
+                <span class="label-icon" aria-hidden="true">💰</span>金额
+            </label>
             <input
                 class="form-input"
                 type="number"
@@ -272,6 +480,7 @@
                 min="0"
                 step="any"
                 inputmode="decimal"
+                placeholder="输入金额"
                 aria-describedby="amount-hint"
             >
             <span id="amount-hint" class="sr-only">请输入要转换的金额，支持小数</span>
@@ -280,8 +489,12 @@
         <!-- 货币选择 -->
         <div class="currency-row">
             <div class="currency-col">
-                <label class="form-label" for="fromCur">源货币</label>
-                <select class="form-select" id="fromCur" aria-label="选择源货币"></select>
+                <label class="form-label" for="fromCur">
+                    <span class="label-icon" aria-hidden="true">🌍</span>源货币
+                </label>
+                <div class="select-wrapper">
+                    <select class="form-select" id="fromCur" aria-label="选择源货币"></select>
+                </div>
             </div>
 
             <button
@@ -293,13 +506,19 @@
             >⇄</button>
 
             <div class="currency-col">
-                <label class="form-label" for="toCur">目标货币</label>
-                <select class="form-select" id="toCur" aria-label="选择目标货币"></select>
+                <label class="form-label" for="toCur">
+                    <span class="label-icon" aria-hidden="true">🎯</span>目标货币
+                </label>
+                <div class="select-wrapper">
+                    <select class="form-select" id="toCur" aria-label="选择目标货币"></select>
+                </div>
             </div>
         </div>
 
         <!-- 转换按钮 -->
-        <button class="btn-primary" id="calcBtn" type="button">开始转换</button>
+        <button class="btn-primary" id="calcBtn" type="button">
+            ⚡ 开始转换
+        </button>
 
         <!-- 结果展示 -->
         <section class="result-box" aria-live="polite" aria-atomic="true">
@@ -309,6 +528,7 @@
 
         <!-- 图表 -->
         <section class="chart-container" aria-label="汇率走势图">
+            <div class="chart-label">📈 近7日汇率走势</div>
             <canvas id="chart"></canvas>
         </section>
 
@@ -329,21 +549,21 @@
             'MXN': '墨西哥比索', 'BRL': '巴西雷亚尔', 'AED': '阿联酋迪拉姆', 'SAR': '沙特里亚尔'
         };
 
-        const API_URL  = 'https://api.exchangerate-api.com/v4/latest/USD';
-        const STALE_MS  = 30 * 60 * 1000; // 30 分钟缓存
+        const API_URL   = 'https://api.exchangerate-api.com/v4/latest/USD';
+        const STALE_MS  = 30 * 60 * 1000;
         const CACHE_KEY = 'fx_rates_cache';
 
-        // ========== DOM 引用（一次性获取） ==========
+        // ========== DOM 引用 ==========
         const $ = (id) => document.getElementById(id);
         const dom = {
-            amount:  $('amount'),
-            fromCur: $('fromCur'),
-            toCur:   $('toCur'),
-            calcBtn: $('calcBtn'),
-            swapBtn: $('swapBtn'),
-            rateInfo:$('rateInfo'),
-            resVal:  $('resVal'),
-            chart:   $('chart'),
+            amount:   $('amount'),
+            fromCur:  $('fromCur'),
+            toCur:    $('toCur'),
+            calcBtn:  $('calcBtn'),
+            swapBtn:  $('swapBtn'),
+            rateInfo: $('rateInfo'),
+            resVal:   $('resVal'),
+            chart:    $('chart'),
         };
 
         // ========== 状态 ==========
@@ -353,9 +573,6 @@
         // ========== 工具函数 ==========
         const getName = (code) => CURRENCY_NAMES[code] || code;
 
-        /**
-         * 带过期时间的 localStorage 缓存读取
-         */
         function loadRatesCache() {
             try {
                 const raw = localStorage.getItem(CACHE_KEY);
@@ -363,33 +580,36 @@
                 const { data, ts } = JSON.parse(raw);
                 if (Date.now() - ts > STALE_MS) return null;
                 return data;
-            } catch {
-                return null;
-            }
+            } catch { return null; }
         }
 
         function saveRatesCache(data) {
-            try {
-                localStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() }));
-            } catch { /* 静默失败 */ }
+            try { localStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() })); }
+            catch { /* quota exceeded, silently ignore */ }
+        }
+
+        // ========== 数值闪烁动画 ==========
+        function flashResultValue() {
+            dom.resVal.classList.remove('is-updated');
+            void dom.resVal.offsetWidth; // 强制回流
+            dom.resVal.classList.add('is-updated');
         }
 
         // ========== 初始化 ==========
         async function init() {
             const btn = dom.calcBtn;
 
-            // 尝试使用缓存
             const cached = loadRatesCache();
             if (cached) {
                 rates = cached;
                 populateSelects();
                 calculate();
-                btn.innerText = '开始转换';
+                btn.innerHTML = '⚡ 开始转换';
                 btn.disabled = false;
                 return;
             }
 
-            btn.innerText = '数据加载中...';
+            btn.innerHTML = '<span style="display:inline-block;animation:btnPulse 1.4s ease-in-out infinite">⏳ 数据加载中...</span>';
             btn.disabled = true;
 
             try {
@@ -400,13 +620,13 @@
                 saveRatesCache(rates);
                 populateSelects();
                 calculate();
-                btn.innerText = '开始转换';
+                btn.innerHTML = '⚡ 开始转换';
                 btn.disabled = false;
             } catch (e) {
                 console.error('汇率数据加载失败：', e);
                 dom.rateInfo.innerText = '网络异常，请刷新重试';
                 dom.rateInfo.classList.add('status-error');
-                btn.innerText = '重新加载';
+                btn.innerHTML = '🔄 重新加载';
                 btn.disabled = false;
             }
         }
@@ -421,7 +641,6 @@
         }
 
         function fillSelect(el, codes, defaultCode) {
-            // 使用 DocumentFragment 减少重排
             const frag = document.createDocumentFragment();
             codes.forEach((c) => {
                 const opt = document.createElement('option');
@@ -448,13 +667,14 @@
 
             if (!rates[from] || !rates[to]) return;
 
-            const rate    = rates[to] / rates[from];
-            const result  = (amt * rate).toFixed(2);
+            const rate     = rates[to] / rates[from];
+            const result   = (amt * rate).toFixed(2);
             const fromName = getName(from);
             const toName   = getName(to);
 
             dom.resVal.innerText   = `${result} ${toName}`;
             dom.rateInfo.innerText = `1 ${fromName} ≈ ${rate.toFixed(4)} ${toName}`;
+            flashResultValue();
 
             updateChart(rate, from, to);
         }
@@ -463,47 +683,82 @@
         function updateChart(curRate, from, to) {
             const ctx = dom.chart.getContext('2d');
 
-            // 基于当前汇率的模拟走势（随机波动）
+            // 从 6 天前到今天的模拟走势
             const points = [];
-            for (let i = 6; i >= 0; i--) {
-                if (i === 6) {
-                    points.push(curRate);
+            for (let i = 0; i <= 6; i++) {
+                if (i === 0) {
+                    let val = curRate;
+                    for (let j = 0; j < 6; j++) {
+                        val /= (1 + (Math.random() - 0.5) * 0.04);
+                    }
+                    points.push(val);
                 } else {
                     const jitter = 1 + (Math.random() - 0.5) * 0.04;
-                    points.push(points[points.length - 1] * jitter);
+                    points.push(points[i - 1] * jitter);
                 }
             }
+
+            const fromName = getName(from);
+            const toName   = getName(to);
+
+            const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+            gradient.addColorStop(0, 'rgba(99,102,241,0.25)');
+            gradient.addColorStop(1, 'rgba(99,102,241,0.02)');
 
             const chartData = {
                 labels: ['6天前', '5天前', '4天前', '3天前', '2天前', '昨天', '今天'],
                 datasets: [{
-                    label: `${getName(from)} 兑 ${getName(to)} 走势`,
+                    label: `${fromName} → ${toName}`,
                     data: points,
-                    borderColor: '#4f46e5',
-                    backgroundColor: 'rgba(79,70,229,0.1)',
+                    borderColor: '#6366f1',
+                    backgroundColor: gradient,
                     tension: 0.4,
                     fill: true,
                     pointRadius: 3,
-                    pointHoverRadius: 5,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: '#6366f1',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    borderWidth: 2.5,
                 }]
             };
 
             const chartOpts = {
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: {
+                    duration: 800,
+                    easing: 'easeOutQuart',
+                },
                 plugins: {
                     legend: { display: false },
                     tooltip: {
                         mode: 'index',
                         intersect: false,
+                        backgroundColor: 'rgba(30,41,59,0.9)',
+                        titleFont: { size: 13 },
+                        bodyFont: { size: 12 },
+                        padding: 10,
+                        cornerRadius: 8,
+                        displayColors: false,
+                        callbacks: {
+                            label: (ctx) => `${fromName} → ${toName}: ${ctx.parsed.y.toFixed(4)}`,
+                        }
                     }
                 },
                 scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { size: 11 }, color: '#94a3b8' }
+                    },
                     y: {
                         beginAtZero: false,
+                        grid: { color: 'rgba(226,232,240,0.6)' },
                         ticks: {
+                            font: { size: 11 },
+                            color: '#94a3b8',
                             callback: (val) => val.toFixed(4)
-                        }
+                        },
                     }
                 },
                 interaction: {
@@ -538,7 +793,6 @@
         dom.calcBtn.addEventListener('click', calculate);
         dom.swapBtn.addEventListener('click', swapCurrencies);
 
-        // 输入变化时实时计算
         dom.amount.addEventListener('input', calculate);
         dom.fromCur.addEventListener('change', calculate);
         dom.toCur.addEventListener('change', calculate);
